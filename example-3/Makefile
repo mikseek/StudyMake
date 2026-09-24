@@ -1,15 +1,28 @@
-.PHONY: all clean 
+.PHONY: all clean run show
 
 CXX = g++
-CXXFLAGS = -Wall -o2
+CXXFLAGS = -Wall -Wextra -std=c++11
 
 SOURCE = Kazino-Royal.cpp
-TARGET = hello 
+TARGET = kazino-royal
+OBJ = $(SOURCE:.cpp=.o)
 
 all: $(TARGET)
 
-$(TARGET): $(SOURCE)
-	$(CXX) $(CXXFLAGS) $(SOURCE) -o $(TARGET)
+$(TARGET): $(OBJ)
+	$(CXX) $(CXXFLAGS) $(OBJ) -o $(TARGET)
+
+$(OBJ): $(SOURCE)
+	$(CXX) $(CXXFLAGS) -c $(SOURCE) -o $(OBJ)
+
+run: $(TARGET)
+	./$(TARGET)
+
+show:
+	@echo "CXX = $(CXX)"
+	@echo "CXXFLAGS = $(CXXFLAGS)"
+	@echo "SOURCE = $(SOURCE)"
+	@echo "TARGET = $(TARGET)"
 
 clean:
-	rm -f $(TARGET) *.O
+	rm -f $(TARGET) $(OBJ)
